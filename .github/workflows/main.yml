@@ -1,0 +1,24 @@
+name: .NET Framework CI
+
+on:
+ push:
+  branches: [ "main", "master" ]
+ pull_request:
+  branches: [ "main", "master" ]
+
+jobs:
+ build:
+  runs-on: windows-latest
+
+  steps:
+  - name: Checkout repository
+    uses: actions/checkout@v4
+
+  - name: Setup MSBuild
+    uses: microsoft/setup-msbuild@v2
+
+  - name: Restore dependencies
+    run: msbuild /t:Restore
+
+  - name: Build project
+    run: msbuild CyberSecurityChatBot.csproj /p:Configuration=Release
